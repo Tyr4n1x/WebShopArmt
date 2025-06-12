@@ -1,6 +1,6 @@
-using WebShop.BlazorUI.Components;
+using BlazorUI.Components;
 
-namespace WebShop.BlazorUI
+namespace BlazorUI
 {
     public class Program
     {
