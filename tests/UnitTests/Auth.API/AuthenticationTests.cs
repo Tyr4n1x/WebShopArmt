@@ -104,7 +104,7 @@ namespace UnitTests.Auth.API
         }
 
         [Fact]
-        public async Task Login_ReturnsBadRequest_ForWrongEntry()
+        public async Task Login_ReturnsUnauthorized_ForWrongEntry()
         {
             var request = new LoginRequest
             {
@@ -119,7 +119,7 @@ namespace UnitTests.Auth.API
         }
 
         [Fact]
-        public async Task Login_ReturnsBadRequest_ForWrongPassword()
+        public async Task Login_ReturnsUnauthorized_ForWrongPassword()
         {
             var request = new LoginRequest
             {
