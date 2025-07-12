@@ -1,38 +1,28 @@
 ﻿<header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
-                        .BREEZED
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                        <li class="scroll-to-section"><a href="#about">About</a></li>
-                        <li class="scroll-to-section"><a href="#projects">Projects</a></li>
-                        <li class="submenu">
-                            <a href="javascript:;">Drop Down</a>
-                            <ul>
-                                <li><a href="">About Us</a></li>
-                                <li><a href="">Features</a></li>
-                                <li><a href="">FAQ's</a></li>
-                                <li><a href="">Blog</a></li>
-                            </ul>
-                        </li>
-                        <li class="scroll-to-section"><a href="#contact-us">Contact Us</a></li>
-                        <div class="search-icon">
-                            <a href="#search"><i class="fa fa-search"></i></a>
-                        </div>
+    <div class="container-fluid">
+        <nav class="main-nav">
+            <NavLink href="/" Match="NavLinkMatch.All" class="logo">
+                <img src="images/logo.png" alt="Main Logo" class="logo-img" />
+            </NavLink>
+            <ul class="nav">
+                <li class="scroll-to-section"><NavLink href="/#top" class="active">Home</NavLink></li>
+                <li class="scroll-to-section"><NavLink href="/#products">Products</NavLink></li>
+                <li class="scroll-to-section"><NavLink href="/#contact-us">Contact Us</NavLink></li>
+                <li class="submenu">
+                    <img src="images/user.svg" alt="User Logo" class="logo-user" />
+                    <ul>
+                        <li><NavLink href="/#about">About Us</NavLink></li>
+                        <li><NavLink href="/#features">Features</NavLink></li>
                     </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
+                </li>
+                <div class="search-icon">
+                    <a href=""><i class="fa fa-search"></i></a>
+                </div>
+            </ul>
+            <!-- ***** For Mobile View ***** -->
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+        </nav>
     </div>
 </header>
