@@ -475,7 +475,7 @@ header
 .header-area .main-nav .nav li.submenu:after {
   font-family: FontAwesome;
   content: "\f107";
-  font-size: 12px;
+  font-size: 16px;
   color: #fff;
   position: absolute;
   right: 18px;
@@ -487,49 +487,50 @@ header
 }
 
 .header-area .main-nav .nav li.submenu ul {
-  position: absolute;
-  width: 200px;
-  box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-  top: 40px;
-  opacity: 0;
-  transform: translateY(+2em);
-  visibility: hidden;
-  z-index: -1;
-  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+    position: absolute;
+    width: 150px;
+    background-color: rgba(255,255,255,0.6);
+    border-radius: 15px;
+    box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    top: 40px;
+    left: -100px;
+    transform: translateY(+2em);
+    visibility: hidden;
+    z-index: -1;
+    transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+    text-align: right;
 }
 
-.header-area .main-nav .nav li.submenu ul li {
-  margin-left: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
+.header-area .main-nav .nav li.submenu ul .submenu-item {
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
-.header-area .main-nav .nav li.submenu ul li a {
-  opacity: 1;
-  display: block;
-  background: #fff;
-  color: #7a7a7a!important;
-  padding-left: 20px;
-  height: 40px;
-  line-height: 40px;
-  -webkit-transition: all 0.3s ease 0s;
-  -moz-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
-  position: relative;
-  font-size: 13px;
-  border-bottom: 1px solid #f5f5f5;
+.header-area .main-nav .nav li.submenu ul .submenu-item a {
+    opacity: 1;
+    display: block;
+    color: #7a7a7a !important;
+    padding-right: 20px;
+    height: 50px;
+    line-height: 50px;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    position: relative;
+    font-size: 16px;
+    border-bottom: 1px solid #f5f5f5;
 }
 
-.header-area .main-nav .nav li.submenu ul li a:hover {
-  background: #fff;
-  color: #5fb759!important;
-  padding-left: 25px;
+.header-area .main-nav .nav li.submenu ul .submenu-item a:hover {
+    color: #5fb759!important;
+    padding-right: 25px;
 }
 
-.header-area .main-nav .nav li.submenu ul li a:hover:before {
-  width: 3px;
+.header-area .main-nav .nav li.submenu ul .submenu-item a:hover:before {
+    width: 3px;
 }
 
 .header-area .main-nav .nav li.submenu:hover ul {
@@ -763,11 +764,11 @@ header
     font-size: 16px;
     font-weight: 400;
     color: #191a20 !important;
-  }
+}
 
 .header-area .main-nav .nav li.submenu ul .submenu-item a:hover:before {
     width: 0px;
-  }
+}
   .header-area .main-nav .nav li.submenu ul.active {
     height: auto !important;
   }
