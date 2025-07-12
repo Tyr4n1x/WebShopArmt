@@ -740,6 +740,12 @@ header
     background: #eee !important;
     color: #5fb759!important;
   }
+  .header-area .main-nav .nav li.submenu .logo-user {
+    height: 30px;
+    filter: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+   }
   .header-area .main-nav .nav li.submenu ul {
     position: relative;
     visibility: inherit;
@@ -748,15 +754,18 @@ header
     transform: translateY(0%);
     transition-delay: 0s, 0s, 0.3s;
     top: 0px;
+    left: 0px;
     width: 100%;
     box-shadow: none;
     height: 0px;
   }
-  .header-area .main-nav .nav li.submenu ul li a {
-    font-size: 12px;
+.header-area .main-nav .nav li.submenu ul .submenu-item a {
+    font-size: 16px;
     font-weight: 400;
+    color: #191a20 !important;
   }
-  .header-area .main-nav .nav li.submenu ul li a:hover:before {
+
+.header-area .main-nav .nav li.submenu ul .submenu-item a:hover:before {
     width: 0px;
   }
   .header-area .main-nav .nav li.submenu ul.active {
