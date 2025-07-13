@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Catalog.API.Data;
 
 namespace Catalog.API
 {
@@ -7,7 +9,9 @@ namespace Catalog.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Configures the DbContextFactory for the ProductContext with a InMemory database (for now)
+            builder.Services.AddDbContext<ProductContext>(opt =>
+                opt.UseInMemoryDatabase("ProductDatabase"));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
