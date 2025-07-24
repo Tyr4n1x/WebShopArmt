@@ -6,22 +6,22 @@ namespace Catalog.API.DTOs
     {
         [Required]
         [StringLength(100)]
-        public required string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required]
         [StringLength(1000)]
-        public required string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
-        public required string Category { get; set; }
+        public string Category { get; set; } = string.Empty;
 
         [StringLength(100)]
         public string? Brand { get; set; }
 
         [Required]
         [Range(0.01, 9999.99, ErrorMessage = "Price must be greater than 0.")]
-        public required decimal Price { get; set; }
+        public decimal Price { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Discounted price must be greater than or equal to 0.")]
         public decimal? DiscountedPrice { get; set; }
