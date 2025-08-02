@@ -11,6 +11,9 @@ namespace Basket.API
             // Add services to the container.
             builder.Services.AddGrpc();
 
+            // Register the BasketService as a singleton
+            builder.Services.AddSingleton<IBasketService, BasketService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
