@@ -1,8 +1,8 @@
 ﻿using Basket.API.Models;
 
-namespace Basket.API.Services
+namespace Basket.API.Repositories
 {
-    public interface IBasketService
+    public interface IBasketRepository
     {
         Task<CustomerBasket?> GetBasketAsync(string customerId);
         Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket);

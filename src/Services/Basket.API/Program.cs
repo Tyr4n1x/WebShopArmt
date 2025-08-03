@@ -1,3 +1,4 @@
+using Basket.API.Repositories;
 using Basket.API.Services;
 
 namespace Basket.API
@@ -11,8 +12,8 @@ namespace Basket.API
             // Add services to the container.
             builder.Services.AddGrpc();
 
-            // Register the BasketService as a singleton
-            builder.Services.AddSingleton<IBasketService, BasketService>();
+            // Register the BasketRepository as a singleton
+            builder.Services.AddSingleton<IBasketRepository, BasketRepository>();
 
             var app = builder.Build();
 
