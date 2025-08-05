@@ -4,7 +4,7 @@ using Grpc.Core;
 
 namespace Basket.API.Services;
 
-public class BasketService(IBasketRepository repository) : Basket.API.BasketService.BasketServiceBase
+public class BasketService(IBasketRepository repository) : GrpcBasketService.GrpcBasketServiceBase
 {
     private readonly IBasketRepository _repository = repository;
 
@@ -26,7 +26,7 @@ public class BasketService(IBasketRepository repository) : Basket.API.BasketServ
             CustomerId = basket.CustomerId
         };
 
-        response.Items.AddRange(basket.Items.Select(item => new Basket.API.BasketItem
+        response.Items.AddRange(basket.Items.Select(item => new GrpcBasketItem
         {
             Id = item.Id.ToString(), // Convert Guid to string
             Name = item.Name,
@@ -42,7 +42,7 @@ public class BasketService(IBasketRepository repository) : Basket.API.BasketServ
     {
         var updatedBasket = new CustomerBasket(request.CustomerId)
         {
-            Items = request.Items.Select(item => new Models.BasketItem
+            Items = request.Items.Select(item => new BasketItem
             {
                 Id = Guid.TryParse(item.Id, out Guid guid) ? guid : Guid.NewGuid(),
                 Name = item.Name,
@@ -59,7 +59,7 @@ public class BasketService(IBasketRepository repository) : Basket.API.BasketServ
             CustomerId = savedBasket.CustomerId
         };
 
-        response.Items.AddRange(savedBasket.Items.Select(item => new Basket.API.BasketItem
+        response.Items.AddRange(savedBasket.Items.Select(item => new GrpcBasketItem
         {
             Id = item.Id.ToString(), // Convert Guid to string
             Name = item.Name,

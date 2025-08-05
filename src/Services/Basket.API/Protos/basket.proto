@@ -4,13 +4,13 @@ option csharp_namespace = "Basket.API";
 
 package basket;
 
-service BasketService {
+service GrpcBasketService {
   rpc GetBasket (GetBasketRequest) returns (BasketResponse);
   rpc UpdateBasket (UpdateBasketRequest) returns (BasketResponse);
   rpc DeleteBasket (DeleteBasketRequest) returns (DeleteBasketResponse);
 }
 
-message BasketItem {
+message GrpcBasketItem {
   string id = 1;
   string name = 2;
   double unitPrice = 3;
@@ -20,7 +20,7 @@ message BasketItem {
 
 message UpdateBasketRequest {
   string customerId = 1;
-  repeated BasketItem items = 2;
+  repeated GrpcBasketItem items = 2;
 }
 
 message GetBasketRequest {
@@ -37,5 +37,5 @@ message DeleteBasketResponse {
 
 message BasketResponse {
   string customerId = 1;
-  repeated BasketItem items = 2;
+  repeated GrpcBasketItem items = 2;
 }
