@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Auth\Auth.API\Auth.API.csproj" />
     <ProjectReference Include="..\..\src\Services\Catalog.API\Catalog.API.csproj" />
+	<ProjectReference Include="..\..\src\Services\Basket.API\Basket.API.csproj" />
   </ItemGroup>
 
 </Project>
