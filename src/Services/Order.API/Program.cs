@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Order.API.Data;
 
 namespace Order.API
 {
@@ -7,7 +9,9 @@ namespace Order.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Configures the DbContextFactory for the OrderContext with a InMemory database (for now)
+            builder.Services.AddDbContext<OrderContext>(opt =>
+                opt.UseInMemoryDatabase("OrderDatabase"));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
