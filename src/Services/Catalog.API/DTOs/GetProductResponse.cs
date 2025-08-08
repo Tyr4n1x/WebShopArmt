@@ -1,6 +1,6 @@
 ﻿namespace Catalog.API.DTOs
 {
-    public class GetProductRequest
+    public class GetProductResponse
     {
         public Guid Id { get; set; }
 

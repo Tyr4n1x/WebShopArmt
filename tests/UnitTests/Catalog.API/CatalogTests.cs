@@ -107,7 +107,7 @@ namespace UnitTests.Catalog.API
         {
             // First create a product
             var createResponse = await _client.PostAsJsonAsync("/api/catalog", sampleProduct);
-            var createdProduct = await createResponse.Content.ReadFromJsonAsync<GetProductRequest>();
+            var createdProduct = await createResponse.Content.ReadFromJsonAsync<GetProductResponse>();
 
             // Now get the created product by ID
             var getResponse = await _client.GetAsync($"/api/catalog/{createdProduct!.Id}");
@@ -115,7 +115,7 @@ namespace UnitTests.Catalog.API
             _testOutput.WriteLine($"Response: {getResponse.StatusCode} - {await getResponse.Content.ReadAsStringAsync()}");
             Assert.Equal(System.Net.HttpStatusCode.OK, getResponse.StatusCode);
 
-            var result = await getResponse.Content.ReadFromJsonAsync<GetProductRequest>();
+            var result = await getResponse.Content.ReadFromJsonAsync<GetProductResponse>();
             Assert.Equal(sampleProduct.Name, result!.Name);
         }
 
@@ -134,7 +134,7 @@ namespace UnitTests.Catalog.API
         {
             // Create a product first
             var createResponse = await _client.PostAsJsonAsync("/api/catalog", sampleProduct);
-            var createdProduct = await createResponse.Content.ReadFromJsonAsync<GetProductRequest>();
+            var createdProduct = await createResponse.Content.ReadFromJsonAsync<GetProductResponse>();
 
             var updateRequest = new UpdateProductRequest
             {
@@ -154,7 +154,7 @@ namespace UnitTests.Catalog.API
             _testOutput.WriteLine($"Response: {updateResponse.StatusCode}");
             Assert.Equal(System.Net.HttpStatusCode.NoContent, updateResponse.StatusCode);
 
-            var result = await _client.GetFromJsonAsync<GetProductRequest>($"/api/catalog/{createdProduct.Id}");
+            var result = await _client.GetFromJsonAsync<GetProductResponse>($"/api/catalog/{createdProduct.Id}");
             Assert.Equal("Updated name", result!.Name);
         }
 

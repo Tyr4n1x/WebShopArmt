@@ -13,7 +13,7 @@ public class CatalogController(ProductContext context) : ControllerBase
 
     // GET: api/catalog/{id}
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<GetProductRequest>> GetProductById(Guid id)
+    public async Task<ActionResult<GetProductResponse>> GetProductById(Guid id)
     {
         var product = await _context.Catalog.FindAsync(id);
         if (product == null)
@@ -21,7 +21,7 @@ public class CatalogController(ProductContext context) : ControllerBase
             return NotFound($"Product with id '{id}' was not found." );
         }
 
-        var result = new GetProductRequest
+        var result = new GetProductResponse
         {
             Id = product.Id,
             Name = product.Name,
@@ -41,7 +41,7 @@ public class CatalogController(ProductContext context) : ControllerBase
 
     // POST: api/catalog
     [HttpPost]
-    public async Task<ActionResult<GetProductRequest>> CreateProduct([FromBody] CreateProductRequest request)
+    public async Task<ActionResult<GetProductResponse>> CreateProduct([FromBody] CreateProductRequest request)
     {
         var product = new Product
         {
@@ -60,7 +60,7 @@ public class CatalogController(ProductContext context) : ControllerBase
         _context.Catalog.Add(product);
         await _context.SaveChangesAsync();
 
-        var result = new GetProductRequest
+        var result = new GetProductResponse
         {
             Id = product.Id,
             Name = product.Name,
