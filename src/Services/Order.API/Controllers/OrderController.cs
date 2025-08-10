@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Order.API.Data;
 using Order.API.DTOs;
 using Order.API.Models;
@@ -15,7 +16,10 @@ public class OrdersController(OrderContext context) : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<GetOrderResponse>> GetOrderById(Guid id)
     {
-        var order = await _context.Orders.FindAsync(id);
+        var order = await _context.Orders
+        .Include(o => o.Items)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
         if (order is null)
         {
             return NotFound($"Order with id '{id}' not found." );
