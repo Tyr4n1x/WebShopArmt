@@ -27,6 +27,7 @@ public class OrdersController(OrderContext context) : ControllerBase
             CustomerId = order.CustomerId,
             Items = order.Items.Select(i => new OrderItem
             {
+                Id = i.Id,
                 Name = i.Name,
                 UnitPrice = i.UnitPrice,
                 Quantity = i.Quantity,
@@ -46,9 +47,10 @@ public class OrdersController(OrderContext context) : ControllerBase
     {
         var order = new CustomerOrder(request.CustomerId)
         {
+            Id = Guid.NewGuid(),
             Items = request.Items.Select(i => new OrderItem
             {
-                Id = Guid.NewGuid(),
+                Id = i.Id,
                 Name = i.Name,
                 UnitPrice = i.UnitPrice,
                 Quantity = i.Quantity,
@@ -65,6 +67,7 @@ public class OrdersController(OrderContext context) : ControllerBase
             CustomerId = order.CustomerId,
             Items = order.Items.Select(i => new OrderItem
             {
+                Id = i.Id,
                 Name = i.Name,
                 UnitPrice = i.UnitPrice,
                 Quantity = i.Quantity,

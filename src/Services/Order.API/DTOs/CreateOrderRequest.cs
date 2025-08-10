@@ -1,10 +1,12 @@
-﻿using Order.API.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Order.API.DTOs
 {
     public class CreateOrderItem
     {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required]
         public string Name { get; set; } = string.Empty;
 
