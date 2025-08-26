@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Order.API.Data;
+using Order.API.Services;
 
 namespace Order.API
 {
@@ -12,6 +13,10 @@ namespace Order.API
             // Configures the DbContextFactory for the OrderContext with a InMemory database (for now)
             builder.Services.AddDbContext<OrderContext>(opt =>
                 opt.UseInMemoryDatabase("OrderDatabase"));
+
+            // Register the PaymentService and StripeSettings
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+            builder.Services.AddScoped<PaymentService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
