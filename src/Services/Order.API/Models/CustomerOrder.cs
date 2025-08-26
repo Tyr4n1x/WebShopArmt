@@ -7,5 +7,6 @@
         public List<OrderItem> Items { get; set; } = [];
         public decimal Total => Items.Sum(i => i.UnitPrice * i.Quantity);
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string PaymentStatus { get; set; } = "Pending";
     }
 }
