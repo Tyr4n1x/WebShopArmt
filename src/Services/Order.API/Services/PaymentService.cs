@@ -13,13 +13,17 @@ namespace Order.API.Services
             StripeConfiguration.ApiKey = _secretKey;
         }
 
-        public async Task<PaymentIntent> CreatePaymentIntentAsync(decimal amount, string currency = "eur")
+        public async Task<PaymentIntent> CreatePaymentIntentAsync(decimal amount, Guid orderId, string currency = "eur")
         {
             var options = new PaymentIntentCreateOptions
             {
                 Amount = (long)(amount * 100), // Stripe works in cents
                 Currency = currency,
-                PaymentMethodTypes = ["bancontact", "card", "ideal", "paypal", "sepa_debit", "sofort"]
+                PaymentMethodTypes = ["bancontact", "card", "ideal", "paypal", "sepa_debit", "sofort"],
+                Metadata = new Dictionary<string, string>
+                    {
+                        { "orderId", orderId.ToString() }
+                    }
             };
 
             var service = new PaymentIntentService();
