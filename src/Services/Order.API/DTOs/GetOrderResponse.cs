@@ -9,5 +9,6 @@ namespace Order.API.DTOs
         public List<OrderItem> Items { get; set; } = [];
         public decimal Total { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string PaymentStatus { get; set; } = string.Empty;
     }
 }
