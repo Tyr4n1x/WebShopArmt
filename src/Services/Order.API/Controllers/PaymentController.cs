@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Order.API.Data;
 using Order.API.Services;
@@ -28,7 +29,10 @@ namespace Order.API.Controllers
         [HttpPost("{orderId:guid}")]
         public async Task<IActionResult> CreatePaymentIntent(Guid orderId)
         {
-            var order = await _context.Orders.FindAsync(orderId);
+            var order = await _context.Orders
+            .Include(o => o.Items)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+
             if (order is null)
             {
                 return NotFound($"Order with ID '{orderId}' not found.");
