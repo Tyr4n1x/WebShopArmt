@@ -126,13 +126,23 @@ namespace EventBus.EventBusRabbitMQ
 
             consumer.ReceivedAsync += async (sender, ea) =>
             {
+                try
+                {
                 var message = Encoding.UTF8.GetString(ea.Body.ToArray());
                 await ProcessEvent(eventName, message);
+                    await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
+                }
+                catch (Exception ex)
+                {
+                    await channel.BasicNackAsync(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true);
+                    _logger.LogError(ex, "Error processing event {EventName}", eventName);
+                }
+                
             };
 
             await channel.BasicConsumeAsync(
                 queue: eventName,
-                autoAck: true,
+                autoAck: false,
                 consumer: consumer);
 
         }
