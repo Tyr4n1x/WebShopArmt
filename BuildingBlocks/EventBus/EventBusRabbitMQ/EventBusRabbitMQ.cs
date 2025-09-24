@@ -1,5 +1,6 @@
 ﻿using EventBus.Interfaces;
 using EventBus.Events;
+using EventBus.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -19,7 +20,7 @@ namespace EventBus.EventBusRabbitMQ
         public EventBusRabbitMQ(IRabbitMQPersistentConnection connection, IServiceProvider serviceProvider, ILogger<EventBusRabbitMQ> logger)
         {
             _connection = connection ?? throw new ArgumentNullException(nameof(connection));
-            _serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -149,28 +150,11 @@ namespace EventBus.EventBusRabbitMQ
 
         private async Task ProcessEvent(string eventName, string message)
         {
-            //if (_handlers.TryGetValue(eventName, out List<Type>? value))
-            //{
-            //    using var scope = _serviceProvider.CreateScope();
-
-            //    foreach (var handlerType in value)
-            //    {
-            //        var handler = scope.ServiceProvider.GetService(handlerType);
-            //        if (handler == null) continue;
-
-            //        var eventType = _eventTypes.Single(t => t.Name == eventName);
-            //        var integrationEvent = JsonConvert.DeserializeObject(message, eventType);
-
-            //        var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
-            //        var method = concreteType.GetMethod("Handle");
-            //        await (Task)method!.Invoke(handler, [integrationEvent])!;
-            //    }
-            //}
             if (_handlers.TryGetValue(eventName, out var handlerTypes))
             {
                 foreach (var handlerType in handlerTypes)
                 {
-                    using var scope = Program.ServiceProvider.CreateScope();
+                    using var scope = _serviceProvider.CreateScope();
                     var handler = scope.ServiceProvider.GetService(handlerType);
 
                     if (handler == null) continue;
