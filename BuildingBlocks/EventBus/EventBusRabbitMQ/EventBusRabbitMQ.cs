@@ -1,5 +1,4 @@
-﻿using EventBus.Interfaces;
-using EventBus.Events;
+﻿using EventBus.Events;
 using EventBus.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -129,8 +128,8 @@ namespace EventBus.EventBusRabbitMQ
             {
                 try
                 {
-                var message = Encoding.UTF8.GetString(ea.Body.ToArray());
-                await ProcessEvent(eventName, message);
+                    var message = Encoding.UTF8.GetString(ea.Body.ToArray());
+                    await ProcessEvent(eventName, message);
                     await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
                 }
                 catch (Exception ex)
@@ -160,7 +159,13 @@ namespace EventBus.EventBusRabbitMQ
                     if (handler == null) continue;
 
                     var eventType = _eventTypes.Single(t => t.Name == eventName);
-                    var integrationEvent = JsonSerializer.Deserialize(message, eventType);
+                    var settings = new JsonSerializerSettings
+                    {
+                        MissingMemberHandling = MissingMemberHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    };
+
+                    var integrationEvent = JsonConvert.DeserializeObject(message, eventType, settings) as IntegrationEvent;
 
                     var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
 
