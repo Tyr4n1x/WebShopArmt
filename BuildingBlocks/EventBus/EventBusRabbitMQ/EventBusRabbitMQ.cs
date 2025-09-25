@@ -154,11 +154,18 @@ namespace EventBus.EventBusRabbitMQ
                 foreach (var handlerType in handlerTypes)
                 {
                     using var scope = _serviceProvider.CreateScope();
+
                     var handler = scope.ServiceProvider.GetService(handlerType);
+
+                    var eventType = _eventTypes.Single(t => t.Name == eventName);
+                    if (handler == null)
+                    {
+                        var interfaceType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
+                        handler = scope.ServiceProvider.GetService(interfaceType);
+                    }
 
                     if (handler == null) continue;
 
-                    var eventType = _eventTypes.Single(t => t.Name == eventName);
                     var settings = new JsonSerializerSettings
                     {
                         MissingMemberHandling = MissingMemberHandling.Ignore,
@@ -167,12 +174,12 @@ namespace EventBus.EventBusRabbitMQ
 
                     var integrationEvent = JsonConvert.DeserializeObject(message, eventType, settings) as IntegrationEvent;
 
-                    var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
+                    if (integrationEvent == null) continue;
 
-                    var handleMethod = concreteType.GetMethod("HandleAsync");
-                    if (handleMethod != null && integrationEvent != null)
+                    var handleMethod = handler.GetType().GetMethod("HandleAsync");
+                    if (handleMethod != null)
                     {
-                        await (Task)handleMethod.Invoke(handler, [integrationEvent])!;
+                        await (Task)handleMethod.Invoke(handler, new object[] { integrationEvent })!;
                     }
                 }
             }
