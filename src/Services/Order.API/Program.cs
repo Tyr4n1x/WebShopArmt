@@ -1,5 +1,9 @@
+using EventBus;
+using EventBus.Events;
+using EventBus.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Order.API.Data;
+using Order.API.IntegrationEvents.Handlers;
 using Order.API.Services;
 
 namespace Order.API
@@ -26,6 +30,10 @@ namespace Order.API
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
+
+            // Subscribe to the EventBus and the PaymentSucceededIntegrationEventHandler
+            var eventBus = app.Services.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<PaymentSucceededIntegrationEvent, PaymentSucceededIntegrationEventHandler>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
