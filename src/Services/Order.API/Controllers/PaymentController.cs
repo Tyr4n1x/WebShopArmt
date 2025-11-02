@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EventBus.Events;
+using EventBus.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Order.API.Data;
@@ -13,16 +15,19 @@ namespace Order.API.Controllers
     {
         private readonly PaymentService _paymentService;
         private readonly OrderContext _context;
-        private readonly StripeSettings _stripeSettings;
+        private readonly StripeSettings _stripeSettings; 
+        private readonly IEventBus _eventBus;
 
         public PaymentsController(
             PaymentService paymentService,
             OrderContext context,
-            IOptions<StripeSettings> stripeSettings)
+            IOptions<StripeSettings> stripeSettings,
+            IEventBus eventBus)
         {
             _paymentService = paymentService;
             _context = context;
             _stripeSettings = stripeSettings.Value;
+            _eventBus = eventBus;
         }
 
         // POST: api/payments/{orderId}
@@ -84,7 +89,7 @@ namespace Order.API.Controllers
                     {
                         if (stripeEvent.Type == "payment_intent.succeeded")
                         {
-                            order.PaymentStatus = "Succeeded";
+                            await _eventBus.PublishAsync(new PaymentSucceededIntegrationEvent(order.Id, order.Total));
                         }
                         else if (stripeEvent.Type == "payment_intent.payment_failed")
                         {
