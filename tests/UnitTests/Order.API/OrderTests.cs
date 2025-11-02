@@ -1,6 +1,8 @@
-﻿using Order.API;
-using Order.API.DTOs;
+﻿using EventBus.Interfaces;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Order.API;
+using Order.API.DTOs;
 using System.Net.Http.Json;
 using Xunit.Abstractions;
 
@@ -110,5 +112,17 @@ namespace UnitTests.Order.API
             _testOutput.WriteLine($"Response: {getResponse.StatusCode} - {await getResponse.Content.ReadAsStringAsync()}");
             Assert.Equal(System.Net.HttpStatusCode.NotFound, getResponse.StatusCode);
         }
+
+        [Fact]
+        public void EventBus_IsRegistered()
+        {
+            using var appFactory = new WebApplicationFactory<Program>();
+            using var scope = appFactory.Services.CreateScope();
+
+            var eventBus = scope.ServiceProvider.GetService<IEventBus>();
+
+            Assert.NotNull(eventBus);
+        }
+
     }
 }
