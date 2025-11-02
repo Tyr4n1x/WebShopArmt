@@ -18,6 +18,9 @@ namespace Order.API
             builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
             builder.Services.AddScoped<PaymentService>();
 
+            // Register the EventBus and related services
+            builder.Services.AddEventBus("localhost");
+
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
